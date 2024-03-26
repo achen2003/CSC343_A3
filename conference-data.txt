@@ -1,0 +1,56 @@
+Notes:
+This data is described in a way that is not intended to suggest what your
+database design should be! This data is loosely based on some real conferences,
+but is not intended to be accurate. 
+
+This data was very loosely inspired by https://uoftcsed.github.io/pubs/
+
+You are welcome to use that list for inspiration for the rest of your data,
+but you do not have to. 
+
+
+=== Conferences ===
+
+The Special Interest Group in Computer Science Education Technical Symposium 
+(SIGCSE TS) has been held annually since 2010. Its annual acceptance rate is
+between 30% and 40%. SIGCSE TS 2023 was held in Toronto, and is the largest
+conference in the database. It is currently accepting submissions for 2025, 
+but reviewing has not yet begun.
+
+The ACM Global Computing Education Conference (CompEd) has been held every 2
+years since 2019. The annual acceptance rate is 33%. It has been scheduled
+for 2025, but is not yet accepting submissions. 
+
+There are at least three other conferences that have occurred. 
+
+=== People ===
+
+Michelle Craig has attended every occurrence of both SIGCSE TS and CompEd. 
+Between both of these conferences, she has had at least 10 papers accepted. 
+She has not submitted any posters. She was the conference chair for CompEd 2019 
+and SIGCSE TS 2023. 
+
+Jennifer Campbell has attended most, but not all, of SIGCSE TS since 2015. She
+did not attend once when she had a paper accepted. She has had at least 5 papers
+accepted at SIGCSE TS, including at least one time when she had two papers 
+accepted to the same conference. She has attended workshops at two different 
+conferences.
+
+Sadia Sharmin has attended SIGCSE TS 3 times since 2018 and she attended CompEd
+in 2019. Each time she attended a conference, she presented a paper or a poster. 
+She was the sole author on all of her posters. 
+
+
+=== Papers ===
+
+The following papers have been published:
+
+* Student Perspectives on Optional Groups, by Jonathan Calver, Jennifer Campbell 
+and Michelle Craig, at SIGCSE TS 2023. 
+
+* Experience Report on the Use of Breakout Rooms in a Large Online Course, 
+by Sadia Sharmin and Larry Yueli Zhang, at SIGCSE TS 2022.
+
+* Introducing and Evaluating Exam Wrappers in CS2, by Michelle Craig, Diane 
+Horton, Daniel Zingaro and Danny Heap, at SIGCSE TS 2016. This paper was 
+submitted 8 times before being accepted at this conference. 
