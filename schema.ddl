@@ -22,3 +22,18 @@ DROP SCHEMA IF EXISTS A3Conference CASCADE;
 CREATE SCHEMA A3Conference;
 SET SEARCH_PATH TO A3Conference;
 
+// Types:
+
+CREATE TYPE A3Conference.submission_type AS ENUM (
+    'paper', 'poster'
+);
+
+CREATE TYPE A3Conference.submission_decision AS ENUM (
+    'accepted', 'rejected'
+);
+
+CREATE TYPE A3Conference.session_type AS ENUM (
+    'paper session', 'poster session'
+);
+
+
