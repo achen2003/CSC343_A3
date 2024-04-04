@@ -2,6 +2,26 @@
 
 -- Could not: What constraints from the domain specification could not be enforced without assertions or triggers, if
 -- any?
+    -- To help ensure there are enough reviewers for submissions, at least one author on each paper must be a 
+    -- reviewer. This is not a requirement for posters.
+
+    -- Reviewers cannot review their own submissions, the submissions of anyone else with whom they are co-authors, 
+    -- or the submissions of anyone else from their organization.
+
+    -- A submission must receive at least three reviews before it can have a decision – either “accept” or “reject”.
+    
+    -- Each review recommends a decision, and a submission cannot be accepted if no reviewer recommended “accept”.
+
+    -- Submissions that have previously been accepted cannot be submitted again later.
+
+    -- Multiple presentations can be scheduled at the same time but no author can have two presentations at the 
+    -- same time, with one exception – an author can have one paper and poster at the same time, as long as they 
+    -- are not the sole author on either of them.
+
+    -- At least one author on every accepted submission must be registered for the conference.
+
+    -- Conference chairs must have been on the organizing committee for that conference at least twice before 
+    -- becoming conference chair, unless the conference is too new.
 
 -- Did not: What constraints from the domain specification could have been enforced without assertions or triggers,
 -- but were not enforced, if any? Why not?
@@ -10,22 +30,35 @@
 
 -- Assumptions: What assumptions did you make?
     -- Conferences with the same name can't start on the same date
+
     -- Assume 2 sessions can occur at the same time in one conference
+
     -- Workshops with the same names can't be in the same conference
+
     -- A facilitator must be an author
+
     -- A committee member must be an author
+
     -- A conference chair must be an author
+
     -- Conference chairs are a member of said conference
+
     -- A reviewer doesn't need to be an author
+
     -- To reduce redundancy, authors and reviewers who are not attending will not have their names 
-        -- considered, and are assumed to be not involved
+    -- considered, as they are assumed to not be involved
+
     -- An attendee cannot attend the same conference twice
 
 -- Formatting according to these rules:
     -- An 80-character line limit is used.
+
     -- Keywords are capitalized consistently, either always in uppercase or always in lowercase.
+    
     -- Table names begin with a capital letter and if multi-word names, use CamelCase.
+    
     -- attribute names are not capitalized.
+    
     -- Line breaks and indentation are used to assist the reader in parsing the code.
 
 
@@ -205,6 +238,18 @@ CREATE TABLE IF NOT EXISTS Workshop (
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+-- A registration for a workshop // Newly added
+CREATE TABLE IF NOT EXISTS WorkshopRegistration (
+    att_id INT NOT NULL,
+    work_id INT NOT NULL,
+    reg_fee DECIMAL(10,2) NOT NULL,
+    PRIMARY KEY (att_id, work_id),
+    FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (work_id) REFERENCES Workshop(work_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+)
 
 -- A facilitator for a workshop
 CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitator <==> Workshop
