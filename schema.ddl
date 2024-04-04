@@ -189,7 +189,9 @@ CREATE TABLE IF NOT EXISTS Attendee (
     -- The attendee's contact information
     att_contact TEXT NOT NULL,
     -- The attendee's organization // Assume all attendees have an org?
-    att_org TEXT NOT NULL
+    att_org TEXT NOT NULL,
+    -- True if the attendee is a student
+    is_student BOOLEAN NOT NULL
 );
 
 -- A workshop at a conference
