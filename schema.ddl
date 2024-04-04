@@ -9,7 +9,6 @@
 -- Extra constraints: What additional constraints that we didnt mention did you enforce, if any?
 
 -- Assumptions: What assumptions did you make?
-    -- Authors within the same organization have unique contact information
     -- Conferences with the same name can't start on the same date
     -- Assume 2 sessions can occur at the same time in one conference
     -- Workshops with the same names can't be in the same conference
@@ -17,6 +16,10 @@
     -- A committee member must be an author
     -- A conference chair must be an author
     -- Conference chairs are a member of said conference
+    -- A reviewer doesn't need to be an author
+    -- To reduce redundancy, authors and reviewers who are not attending will not have their names 
+        -- considered, and are assumed to be not involved
+    -- An attendee cannot attend the same conference twice
 
 -- Formatting according to these rules:
     -- An 80-character line limit is used.
@@ -45,27 +48,28 @@ CREATE TYPE A3Conference.session_type AS ENUM (
 );
 
 CREATE TYPE A3Conference.conflict_type AS ENUM (
-    'co-author', 'organization', 'other'
+    'co-author', 'organization', 'other', 'none'
 );
+
+// CREATE TYPE A3Conference.attendee_type AS ENUM (
+//     'author', 'student'
+// );
 
 // Tables ===============================
 
--- An author of a submission
+-- An author who writes papers/posters
 CREATE TABLE IF NOT EXISTS Author (
     -- Unique author identifier
     auth_id INT PRIMARY KEY,
-    -- The name of the author
-    name TEXT NOT NULL,
     -- The organization of which the author is a member of
     organization TEXT NOT NULL,
-    -- The contact information of the author
-    contact_info TEXT NOT NULL,
+    att_id INT NOT NULL,
     UNIQUE(organization, contact_info)
-    // -- The position of the author's name on a paper
-    // order INT NOT NULL
+    FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
--- An author who contributed to a submission // To eliminate redundancy
+-- An author who contributed to a submission // Relation connecting Author <==> Submissino
 CREATE TABLE IF NOT EXISTS Contributor (
     auth_id INT NOT NULL,
     sub_id INT NOT NULL,
@@ -84,11 +88,7 @@ CREATE TABLE IF NOT EXISTS Submission (
     title TEXT NOT NULL,
     -- The type of submission 
     stype submission_type NOT NULL
-    // auth_id INT NOT NULL,
     conf_id INT NOT NULL,
-    // PRIMARY KEY (title, stype, auth_id)
-    // FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
-    //     ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -105,20 +105,20 @@ CREATE TABLE IF NOT EXISTS Conference (
     cstart_date DATE NOT NULL,
     cend_date DATE NOT NULL,
     UNIQUE(cname, cstart_date),
-    CHECK (cstart_date < cend_date)
+    CHECK (cstart_date < cend_date) // Need?
 );
 
 -- An author who reviewed a submission
 CREATE TABLE IF NOT EXISTS Reviewer (
     -- Unique reviewer identifier
     reviewer_id INT PRIMARY KEY,
-    auth_id INT NOT NULL,
-    // sub_id INT NOT NULL,
-    conf_type conflict_type NOT NULL,
+    -- Any possible reviewer conflicts
+    confl_type conflict_type NOT NULL,
+    att_id INT NOT NULL,
     FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
-    // FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
-    //     ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
     PRIMARY KEY (auth_id, sub_id)
 );
 
@@ -142,42 +142,54 @@ CREATE TABLE IF NOT EXISTS Session (
     conf_id INT NOT NULL,
     -- Paper or poster session
     sess_type session_type NOT NULL,
-    -- The start time of the session
+    -- The start and end time of the session
     sess_start_time DATETIME NOT NULL,
+    sess_end_time DATETIME NOT NULL,
     -- The chair of a paper session
     sess_chair_id INT, // Will result in null values unfortunately, no NOT NULL
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sess_chair_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
+    CHECK (sess_start_time < sess_end_time)
 );
 
--- A presentation scheduled during a session
+-- A presentation of a submission scheduled during a session
 CREATE TABLE IF NOT EXISTS Presentation (
     sess_id INT NOT NULL,
     sub_id INT NOT NULL,
     -- The start time of the presentation
     pres_start_time DATETIME NOT NULL,
-    PRIMARY KEY (sess_id, sub_id),
+    PRIMARY KEY (sess_id, sub_id), // Can't have the 2 of the same submissions in the same session
     FOREIGN KEY (sess_id) REFERENCES Session(sess_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- A user registration for a conference // WIP ******
-CREATE TABLE IF NOT EXISTS Registration (
-    -- Unique registration identifier
-    reg_id INT PRIMARY KEY,
-    attendee_id INT NOT NULL,
+-- A user registration for a conference 
+CREATE TABLE IF NOT EXISTS Registration ( // Relation connecting Attendee <==> Conference
+    att_id INT NOT NULL,
     conf_id INT NOT NULL,
     -- The registration fee
     reg_fee DECIMAL(10,2) NOT NULL,
-    UNIQUE(attendee_id, conf_id), // make sure to note the assumption here
-    FOREIGN KEY (attendee_id) REFERENCES Authors(author_id)
+    PRIMARY KEY (att_id, conf_id),
+    FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- An attendee of a conference
+CREATE TABLE IF NOT EXISTS Attendee (
+    -- Unique attendee identifier
+    att_id INT PRIMARY KEY,
+    -- The attendee's name
+    att_name TEXT NOT NULL,
+    -- The attendee's contact information
+    att_contact TEXT NOT NULL,
+    -- The attendee's organization // Assume all attendees have an org?
+    att_org TEXT NOT NULL
 );
 
 -- A workshop at a conference
@@ -193,7 +205,7 @@ CREATE TABLE IF NOT EXISTS Workshop (
 );
 
 -- A facilitator for a workshop
-CREATE TABLE IF NOT EXISTS Facilitator (
+CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitator <==> Workshop
     fac_id INT NOT NULL,
     work_id INT NOT NULL,
     PRIMARY KEY (fac_id, work_id),
