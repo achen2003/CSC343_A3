@@ -249,7 +249,7 @@ CREATE TABLE IF NOT EXISTS WorkshopRegistration (
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (work_id) REFERENCES Workshop(work_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-)
+) 
 
 -- A facilitator for a workshop
 CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitator <==> Workshop
