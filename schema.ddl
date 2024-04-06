@@ -1,32 +1,60 @@
 -- Schema for storing computer science conferences
 
+
 -- Could not: What constraints from the domain specification could not be enforced without assertions or triggers, if
 -- any?
     -- To help ensure there are enough reviewers for submissions, at least one author on each paper must be a 
     -- reviewer. This is not a requirement for posters.
+        -- This requires checks that span across Author, Submission, and Reviewer. Such a check thus requires an 
+        -- assertion or trigger.
 
     -- Reviewers cannot review their own submissions, the submissions of anyone else with whom they are co-authors, 
     -- or the submissions of anyone else from their organization.
+        -- Similar to the above, this requires checks across Author, Submission, and Reviewer. Therefore an 
+        -- assertion or trigger is needed.
 
     -- A submission must receive at least three reviews before it can have a decision – either “accept” or “reject”.
+        -- This requires dynamic counting of reviews, and thus cannot be enforced without assertions or triggers.
     
     -- Each review recommends a decision, and a submission cannot be accepted if no reviewer recommended “accept”.
+        -- Much like the previous, this constraint requires dynamic counting of reviews, therefore it must use
+        -- assertions or triggers.
 
     -- Submissions that have previously been accepted cannot be submitted again later.
+        -- This requires cross table checking across Submission and Review, and also requires checking past data.
+        -- As such, it requires assertions or triggers.
 
     -- Multiple presentations can be scheduled at the same time but no author can have two presentations at the 
     -- same time, with one exception – an author can have one paper and poster at the same time, as long as they 
     -- are not the sole author on either of them.
+        -- This constraint involves checking across Presentation, Session, and also across multiple presentations
+        -- and checking their scheduling. Thus, it requires assertions or triggers.
 
     -- At least one author on every accepted submission must be registered for the conference.
+        -- As with many other constraints, this one requires cross table checks on Submission, Author, and
+        Registration, and cannot be done without assertions or triggers.
 
     -- Conference chairs must have been on the organizing committee for that conference at least twice before 
     -- becoming conference chair, unless the conference is too new.
+        -- This involves checking the history of committee memberships, which involves getting past data as well
+        -- as checking conditions, and therefore needs assertions or triggers.
+
 
 -- Did not: What constraints from the domain specification could have been enforced without assertions or triggers,
 -- but were not enforced, if any? Why not?
+    -- Most attendees pay a registration fee, and students pay a lower fee than other attendees.
+        -- This constraint could have been enforced using a cosntraint in the Registration table to check if the
+        -- attendee with the given att_id is a student, and then assigning the corresponding fee.
+        -- However, this does not consider the fact that different conferences can theoretically have
+        -- different fees. Thus, we would have to store fee values into the Conference and Workshop tables.
+        -- Thus, we would need to have a subquery in Registration check if a registration is from a student
+        -- or not, and store the corresponding registration fee in Registration. At this point, Conference, 
+        -- Workshop, and Registration would be storing fee information, which would incur redundancy.
+        -- In order to avoid unnecessary complexity and redundancy, we decided not to enforce this constraint. 
+
 
 -- Extra constraints: What additional constraints that we didnt mention did you enforce, if any?
+
 
 -- Assumptions: What assumptions did you make?
     -- Conferences with the same name can't start on the same date
@@ -50,6 +78,7 @@
 
     -- An attendee cannot attend the same conference twice
 
+
 -- Formatting according to these rules:
     -- An 80-character line limit is used.
 
@@ -61,6 +90,17 @@
     
     -- Line breaks and indentation are used to assist the reader in parsing the code.
 
+
+-- General principles:
+    -- Avoid redundancy.
+    
+    -- Avoid designing your schema in such a way that there are attributes that can be null.
+    
+    -- If a constraint given above in the domain description can be expressed without assertions or triggers, 
+    -- it should be enforced by your schema, unless you can articulate a good reason not to do so.
+    
+    -- There may be additional constraints that make sense but were not specified in the domain description. You
+    -- get to decide on whether to enforce any of these in your DDL.
 
 DROP SCHEMA IF EXISTS A3Conference CASCADE;
 CREATE SCHEMA A3Conference;
@@ -97,7 +137,9 @@ CREATE TABLE IF NOT EXISTS Author (
     -- The organization of which the author is a member of
     organization TEXT NOT NULL,
     att_id INT NOT NULL,
-    UNIQUE(organization, contact_info)
+    -- The name of the author
+    auth_name TEXT NOT NULL,
+    // UNIQUE(organization, contact_info)
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
 );
@@ -120,7 +162,7 @@ CREATE TABLE IF NOT EXISTS Submission (
     -- The title of the submission
     title TEXT NOT NULL,
     -- The type of submission 
-    stype submission_type NOT NULL
+    stype submission_type NOT NULL,
     conf_id INT NOT NULL,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
@@ -130,12 +172,15 @@ CREATE TABLE IF NOT EXISTS Submission (
 CREATE TABLE IF NOT EXISTS Conference (
     -- Unique conference identifier
     conf_id INT PRIMARY KEY,
-    -- Name of the conference
+    -- The name of the conference
     cname TEXT NOT NULL,
-    -- Location of the conference
+    -- The location of the conference
     clocation TEXT NOT NULL,
-    -- Start and end dates of the conference
+    -- The start and end dates of the conference
     cstart_date DATE NOT NULL,
+    -- The conference fees
+    regular_fee DECIMAL(10, 2) NOT NULL,
+    student_fee DECIMAL(10, 2) NOT NULL,
     cend_date DATE NOT NULL,
     UNIQUE(cname, cstart_date),
     CHECK (cstart_date < cend_date) // Need?
@@ -148,11 +193,11 @@ CREATE TABLE IF NOT EXISTS Reviewer (
     -- Any possible reviewer conflicts
     confl_type conflict_type NOT NULL,
     att_id INT NOT NULL,
+    auth_id INT NOT NULL,
     FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    PRIMARY KEY (auth_id, sub_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 -- A review made by a reviewer
@@ -191,12 +236,15 @@ CREATE TABLE IF NOT EXISTS Session (
 CREATE TABLE IF NOT EXISTS Presentation (
     sess_id INT NOT NULL,
     sub_id INT NOT NULL,
+    pres_id INT NOT NULL,
     -- The start time of the presentation
     pres_start_time DATETIME NOT NULL,
     PRIMARY KEY (sess_id, sub_id), // Can't have the 2 of the same submissions in the same session
     FOREIGN KEY (sess_id) REFERENCES Session(sess_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (pres_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
@@ -204,13 +252,20 @@ CREATE TABLE IF NOT EXISTS Presentation (
 CREATE TABLE IF NOT EXISTS Registration ( // Relation connecting Attendee <==> Conference
     att_id INT NOT NULL,
     conf_id INT NOT NULL,
-    -- The registration fee
-    reg_fee DECIMAL(10,2) NOT NULL,
+    // -- The registration fee
+    // reg_fee DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (att_id, conf_id),
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
+    // CONSTRAINT chk_fee CHECK ( // Confirm that this works
+    //     reg_fee = (SELECT CASE WHEN a.is_student THEN c.student_fee ELSE c.regular_fee END
+    //                FROM Conference c
+    //                JOIN Registration r ON c.conf_id = r.conf_id
+    //                JOIN Attendee a ON r.att_id = a.att_id
+    //                WHERE r.att_id = att_id AND r.conf_id = conf_id)
+    // )
 );
 
 -- An attendee of a conference
@@ -234,22 +289,25 @@ CREATE TABLE IF NOT EXISTS Workshop (
     -- The name of the workshop
     wname TEXT NOT NULL,
     conf_id INT NOT NULL,
+    -- The workshop fees
+    regular_fee DECIMAL(10, 2) NOT NULL,
+    student_fee DECIMAL(10, 2) NOT NULL,
     UNIQUE(name, conference_id),
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- A registration for a workshop // Newly added
+-- A registration for a workshop
 CREATE TABLE IF NOT EXISTS WorkshopRegistration (
     att_id INT NOT NULL,
     work_id INT NOT NULL,
-    reg_fee DECIMAL(10,2) NOT NULL,
+    // reg_fee DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (att_id, work_id),
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (work_id) REFERENCES Workshop(work_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-) 
+);
 
 -- A facilitator for a workshop
 CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitator <==> Workshop
@@ -266,14 +324,27 @@ CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitat
 CREATE TABLE IF NOT EXISTS Committee (
     -- Unique committee identifier
     comm_id INT PRIMARY KEY,
+    -- The name of the committee
+    comm_name TEXT NOT NULL,
     conf_id INT NOT NULL,
-    member_id INT NOT NULL,
+    // member_id INT NOT NULL,
     UNIQUE(conf_id, member_id),
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
+        ON DELETE CASCADE ON UPDATE CASCADE
+    // FOREIGN KEY (member_id) REFERENCES Author(auth_id)
+    //     ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- A member of an organizing committee
+CREATE TABLE IF NOT EXISTS CommitteeMember ( // Relation connecting Author/Committee member <==> Workshop
+    comm_id INT NOT NULL,
+    member_id INT NOT NULL,
+    PRIMARY KEY (comm_id, member_id),
+    FOREIGN KEY (comm_id) REFERENCES Committee(comm_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (member_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 
 -- A conference chair for a committee
 CREATE TABLE IF NOT EXISTS ConferenceChairs (
@@ -281,12 +352,12 @@ CREATE TABLE IF NOT EXISTS ConferenceChairs (
     chair_id INT PRIMARY KEY,
     conf_id INT NOT NULL,
     member_id INT NOT NULL,
-    UNIQUE(conf_id, member_id)
+    UNIQUE(conf_id, member_id),
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (member_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-)
+);
 
 
 
