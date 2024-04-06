@@ -116,7 +116,8 @@ CREATE TYPE A3Conference.review_decision AS ENUM (
     'accepted', 'rejected'
 );
 
-CREATE TYPE A3Conference.session_type AS ENUM (
+// This ENUM was included in case any new session types were to be introduced
+CREATE TYPE A3Conference.session_type AS ENUM ( 
     'paper session', 'poster session'
 );
 
@@ -144,7 +145,7 @@ CREATE TABLE IF NOT EXISTS Author (
         ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
--- An author who contributed to a submission // Relation connecting Author <==> Submissino
+-- An author who contributed to a submission // Relation connecting Author <==> Submission
 CREATE TABLE IF NOT EXISTS Contributor (
     auth_id INT NOT NULL,
     sub_id INT NOT NULL,
@@ -166,6 +167,21 @@ CREATE TABLE IF NOT EXISTS Submission (
     conf_id INT NOT NULL,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
+);
+
+-- The position/order of an author on a submission
+CREATE TABLE IF NOT EXISTS SubmissionAuthorOrder (
+    sub_id INT NOT NULL,
+    auth_id INT NOT NULL,
+    -- The order of author names on a given submission
+    author_order INT NOT NULL,
+    PRIMARY KEY (sub_id, author_order),
+    FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
+        ON DELETE CASCADE ON UPDATE CASCADE,
+    CHECK (author_order > 0),
+    UNIQUE (sub_id, author_order)
 );
 
 -- A computer science conference
