@@ -1,6 +1,7 @@
 SET SEARCH_PATH TO A3Conference, public;
 
 -- Query for reporting the percentage of accepted submissions for every year each conference has been run
+<<<<<<< Updated upstream
 -- SELECT
 --     c.conf_id,
 --     EXTRACT(YEAR FROM c.cstart_date) AS conference_year,
@@ -27,6 +28,18 @@ SELECT
             2
         ) 
     END AS acceptance_percentage
+=======
+SELECT
+    c.conf_id,
+    EXTRACT(YEAR FROM c.cstart_date) AS conference_year,
+    COUNT(DISTINCT s.sub_id) AS total_submissions,
+    COUNT(DISTINCT CASE WHEN r.decision = 'accept' THEN s.sub_id END) AS accepted_submissions,
+    ROUND(
+        100.0 * COUNT(DISTINCT CASE WHEN r.decision = 'accept' THEN s.sub_id END) /
+        COUNT(DISTINCT s.sub_id),
+        2
+    ) AS acceptance_percentage
+>>>>>>> Stashed changes
 FROM Conference c
 LEFT JOIN Submission s ON c.conf_id = s.conf_id
 LEFT JOIN Review r ON s.sub_id = r.sub_id

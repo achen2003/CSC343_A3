@@ -2,7 +2,7 @@ SET SEARCH_PATH TO A3Conference, public;
 
 -- Average number of papers in a paper session for each conference
 CREATE VIEW AvgPapersPerPaperSession AS
-    SELECT s.conf_id, AVG(CASE WHEN s.stype = 'paper' THEN 1 ELSE 0 END) AS avg_papers_per_session
+    SELECT s.conf_id, AVG(CASE WHEN s.sess_type = 'paper session' THEN 1 ELSE 0 END) AS avg_papers_per_session
     FROM Session s
     JOIN Presentation p ON s.sess_id = p.sess_id
     JOIN Submission sub ON p.sub_id = sub.sub_id
@@ -11,7 +11,7 @@ CREATE VIEW AvgPapersPerPaperSession AS
 
 -- Average number of posters in a poster session for each conference
 CREATE VIEW AvgPostersPerPosterSession AS
-    SELECT s.conf_id, AVG(CASE WHEN s.stype = 'poster' THEN 1 ELSE 0 END) AS avg_posters_per_session
+    SELECT s.conf_id, AVG(CASE WHEN s.sess_type = 'poster session' THEN 1 ELSE 0 END) AS avg_posters_per_session
     FROM Session s
     JOIN Presentation p ON s.sess_id = p.sess_id
     JOIN Submission sub ON p.sub_id = sub.sub_id
