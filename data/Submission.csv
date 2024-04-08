@@ -31,7 +31,7 @@ sub_id,title,stype,conf_id
 30,Introducing and Evaluating Exam Wrappers in CS2,paper,20
 31,Introducing and Evaluating Exam Wrappers in CS2,paper,20
 32,Extremely Fun,paper,20
-33,Introducing and Evaluating Exam Wrappers in CS2,paper,20
+33,Introducing and Evaluating Exam Wrappers in CS2,paper,20 
 34,Khushi's Silly Paper,paper,6
 35,Khushi's Silly Paper2,paper,6
 37,Khushi's Silly Paper1,paper,8
@@ -50,3 +50,36 @@ sub_id,title,stype,conf_id
 50,New Paper 8,paper,2
 51,New Paper 9,paper,2
 52,New Paper 10,paper,2
+53,Khushi's Exciting Paper,paper,21
+54,Khushi's Creative Paper,paper,21
+55,Khushi's Innovative Paper,paper,22
+56,Khushi's Interactive Paper,paper,22
+57,Khushi's Educational Paper,paper,23
+58,Khushi's Informative Paper,paper,23
+59,Khushi's Insightful Paper,paper,24
+60,Khushi's Enlightening Paper,paper,24
+61,Khushi's Exciting Paper,paper,25
+62,Khushi's Creative Paper,paper,25
+63,Khushi's Innovative Paper,paper,26
+64,Khushi's Interactive Paper,paper,26
+65,Khushi's Educational Paper,paper,18
+66,Khushi's Informative Paper,paper,18
+67,Khushi's Insightful Paper,paper,13
+68,Khushi's Enlightening Paper,paper,13
+69,hi,paper,21
+70,hi,paper,22
+71,hi,paper,23
+72,hi,paper,24
+73,hi,paper,25
+74,hi,paper,26
+75,hi,paper,18
+76,hi,paper,13
+77,Khushi's Insightful Paper,paper,19
+78,Khushi's Enlightening Paper,paper,19
+79,hi,paper,19
+80,hola,paper,20
+81,hola,paper,20
+82,hooray,paper,13
+83,hooray,paper,12
+84,hooray1,paper,13
+85,hooray1,paper,12

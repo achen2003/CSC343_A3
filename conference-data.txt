@@ -38,6 +38,23 @@ but reviewing has not yet begun.
   - regular fee will be $100, and student fee will be $60
 
 //
+2010-2015
+2017,2018, 2024
+--acceptance rate is 0
+-- add 1 poster each which will be accepted
+-- add 2 papers which are rejected
+-- add these submisisons for papers for conferences 21-26,18, 13
+- reject them for sub id 53- 68
+
+-- 2016 20 
+--2017 0
+
+--accept 1 more submisiont for 2016
+--2019-2021 area at 50% so reject 1 more 
+--2022, 2023 are at 100
+
+add two submisison rejected
+-- reject submisison
 
 The ACM Global Computing Education Conference (CompEd) has been held every 2
 years since 2019. The annual acceptance rate is 33%. It has been scheduled
@@ -48,6 +65,7 @@ for 2025, but is not yet accepting submissions.
 - 2 rejected
 can be from same person
 - 10 new submissions to confernece 2 which are rejected
+
 
 There are at least three other conferences that have occurred. 
 
@@ -139,3 +157,12 @@ Horton, Daniel Zingaro and Danny Heap
 --attendee 3 is attending 20 and submit paper 32, which will be reviewed by michelle
 --reject submission 24-31, accept 33
 attendee 3 will be reject 24-31
+SELECT
+    COUNT(*) AS total_submissions,
+    SUM(CASE WHEN r.decision = 'accept' THEN 1 ELSE 0 END) AS accepted_submissions,
+    SUM(CASE WHEN r.decision = 'reject' THEN 1 ELSE 0 END) AS rejected_submissions
+FROM
+    review r
+    JOIN submission s ON r.sub_id = s.sub_id
+WHERE
+    s.conf_id = 2;
