@@ -165,10 +165,10 @@ CREATE TABLE IF NOT EXISTS Conference (
     clocation TEXT NOT NULL,
     -- The start and end dates of the conference
     cstart_date DATE NOT NULL,
+    cend_date DATE NOT NULL,
     -- The conference fees
     regular_fee DECIMAL(10, 2) NOT NULL,
     student_fee DECIMAL(10, 2) NOT NULL,
-    cend_date DATE NOT NULL,
     UNIQUE(cname, cstart_date),
     CHECK (cstart_date < cend_date)
 );
@@ -191,26 +191,15 @@ CREATE TABLE IF NOT EXISTS Submission (
 CREATE TABLE IF NOT EXISTS Contributor (
     auth_id INT NOT NULL,
     sub_id INT NOT NULL,
+    -- The order of author names on a given submission
+    auth_order INT NOT NULL,
+    CHECK (author_order > 0),
+    UNIQUE (sub_id, author_order)
     PRIMARY KEY (auth_id, sub_id),
     FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-);
-
--- The position/order of an author on a submission.
-CREATE TABLE IF NOT EXISTS SubmissionAuthorOrder (
-    sub_id INT NOT NULL,
-    auth_id INT NOT NULL,
-    -- The order of author names on a given submission
-    author_order INT NOT NULL,
-    PRIMARY KEY (sub_id, author_order),
-    FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
-        ON DELETE CASCADE ON UPDATE CASCADE,
-    CHECK (author_order > 0),
-    UNIQUE (sub_id, author_order)
 );
 
 -- An author who reviewed a submission.
