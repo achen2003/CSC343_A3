@@ -11,6 +11,10 @@ sub_id, title, stype, conf_id
 10, MC10, paper, 2
 11, JC1, paper, 12
 12, JC2, paper, 12
-13, JC2, paper, 15
-14, JC2, paper, 16
-15, JC2, paper, 17
+13, JC3, paper, 15
+14, JC4, paper, 16
+15, JC5, paper, 17
+16, SS1, poster, 15
+17, SS2, poster, 16
+18, SS3, poster, 17
+19, SS4, poster, 6
