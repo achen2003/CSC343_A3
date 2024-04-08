@@ -34,3 +34,17 @@ rev_id,reviewer_id,sub_id,decision
 33,1,13,accept
 34,1,14,accept
 35,1,15,accept
+36,3,20,accept
+37,5,21,accept
+38,3,22,accept
+39,2,23,accept
+40,3,24,reject
+41,3,25,reject
+42,3,26,reject
+43,3,27,reject
+44,3,28,reject
+45,3,29,reject
+46,3,30,reject
+47,3,31,reject
+48,3,33,accept
+49,1,32,accept

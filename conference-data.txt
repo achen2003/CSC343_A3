@@ -12,6 +12,7 @@ but you do not have to.
 - all accepted submisisons should be presented as well
 - add facilitator
 - add author order for submissions
+- add accept/reject for every single submission
 //
 
 === Conferences ===
@@ -97,9 +98,29 @@ The following papers have been published:
 * Student Perspectives on Optional Groups, by Jonathan Calver, Jennifer Campbell 
 and Michelle Craig, at SIGCSE TS 2023. 
 
+-- make sure authors 1,2, and 9 are attending SIOGCS23 (event 12)
+-- add submission for this papers
+-- get it reviewed by someone else who is attending event 12 
+-- got attendee 3 to attend conference 12 and submit a paper (they will be the reviewer)
+
 * Experience Report on the Use of Breakout Rooms in a Large Online Course, 
 by Sadia Sharmin and Larry Yueli Zhang, at SIGCSE TS 2022.
+
+-- add larry to attendee and author
+-- create submisisons
+-- make sure one other person is at conference 14
+-- make sure this person has a submisison and get it reviewed by Sadia
+-- this person will review this paper (this person is author 2)
 
 * Introducing and Evaluating Exam Wrappers in CS2, by Michelle Craig, Diane 
 Horton, Daniel Zingaro and Danny Heap, at SIGCSE TS 2016. This paper was 
 submitted 8 times before being accepted at this conference. 
+
+-- add authors and attendees Michelle Craig, Diane 
+Horton, Daniel Zingaro and Danny Heap
+--get them to all attend conference 20
+--get another person to attend conference 20 and publish paper There
+--get 8 reviews of reject
+--attendee 3 is attending 20 and submit paper 32, which will be reviewed by michelle
+--reject submission 24-31, accept 33
+attendee 3 will be reject 24-31
