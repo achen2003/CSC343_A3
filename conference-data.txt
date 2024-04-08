@@ -5,7 +5,7 @@ but is not intended to be accurate.
 
 This data was very loosely inspired by https://uoftcsed.github.io/pubs/
 
-You are welcome to use that list for inspiration for the rest of your data,
+You are welcome to use that list   for inspiration for the rest of your data,
 but you do not have to. 
 
 //Khushi's notes
