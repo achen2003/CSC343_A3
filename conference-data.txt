@@ -166,3 +166,23 @@ FROM
     JOIN submission s ON r.sub_id = s.sub_id
 WHERE
     s.conf_id = 2;
+
+
+add these to presenation
+ sub_id | conf_id |    cname     |         title         
+--------+---------+--------------+-----------------------
+     34 |       6 | CompEd2019   | Khushi's Silly Paper
+     37 |       8 | CompEd2021   | Khushi's Silly Paper1
+     40 |      10 | CompEd2023   | Khushi's Silly Paper1
+     69 |      21 | SIGCSETS2015 | hi
+     70 |      22 | SIGCSETS2014 | hi
+     71 |      23 | SIGCSETS2013 | hi
+     72 |      24 | SIGCSETS2012 | hi
+     73 |      25 | SIGCSETS2011 | hi
+     74 |      26 | SIGCSETS2010 | hi
+     75 |      18 | SIGCSETS2018 | hi
+     76 |      13 | SIGCSETS2024 | hi
+     79 |      19 | SIGCSETS2017 | hi
+     80 |      20 | SIGCSETS2016 | hola
+     81 |      20 | SIGCSETS2016 | hola
+     82 |      13 | SIGCSETS2024 | hooray
