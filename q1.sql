@@ -1,7 +1,6 @@
 SET SEARCH_PATH TO A3Conference, public;
 
 -- Query for reporting the percentage of accepted submissions for every year each conference has been run
-<<<<<<< Updated upstream
 -- SELECT
 --     c.conf_id,
 --     EXTRACT(YEAR FROM c.cstart_date) AS conference_year,
@@ -18,6 +17,7 @@ SET SEARCH_PATH TO A3Conference, public;
 -- GROUP BY c.conf_id, EXTRACT(YEAR FROM c.cstart_date)
 -- ORDER BY c.conf_id, conference_year;
 
+-- Query for reporting the percentage of accepted submissions for every year each conference has been run
 SELECT 
     c.cname AS conference_name,
     EXTRACT(YEAR FROM c.cstart_date) AS submission_year,
