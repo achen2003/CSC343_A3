@@ -106,7 +106,7 @@ DROP SCHEMA IF EXISTS A3Conference CASCADE;
 CREATE SCHEMA A3Conference;
 SET SEARCH_PATH TO A3Conference;
 
-// Types ===============================
+-- Types ===============================
 
 CREATE TYPE A3Conference.submission_type AS ENUM (
     'paper', 'poster'
@@ -116,7 +116,7 @@ CREATE TYPE A3Conference.review_decision AS ENUM (
     'accepted', 'rejected'
 );
 
-// This ENUM was included in case any new session types were to be introduced
+-- This ENUM was included in case any new session types were to be introduced
 CREATE TYPE A3Conference.session_type AS ENUM ( 
     'paper session', 'poster session'
 );
@@ -125,11 +125,8 @@ CREATE TYPE A3Conference.conflict_type AS ENUM (
     'co-author', 'organization', 'other', 'none'
 );
 
-// CREATE TYPE A3Conference.attendee_type AS ENUM (
-//     'author', 'student'
-// );
 
-// Tables ===============================
+-- Tables ===============================
 
 -- An author who writes papers/posters
 CREATE TABLE IF NOT EXISTS Author (
@@ -140,12 +137,11 @@ CREATE TABLE IF NOT EXISTS Author (
     att_id INT NOT NULL,
     -- The name of the author
     auth_name TEXT NOT NULL,
-    // UNIQUE(organization, contact_info)
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
 );
 
--- An author who contributed to a submission // Relation connecting Author <==> Submission
+-- An author who contributed to a submission -- Relation connecting Author <==> Submission
 CREATE TABLE IF NOT EXISTS Contributor (
     auth_id INT NOT NULL,
     sub_id INT NOT NULL,
@@ -199,7 +195,7 @@ CREATE TABLE IF NOT EXISTS Conference (
     student_fee DECIMAL(10, 2) NOT NULL,
     cend_date DATE NOT NULL,
     UNIQUE(cname, cstart_date),
-    CHECK (cstart_date < cend_date) // Need?
+    CHECK (cstart_date < cend_date) -- Need?
 );
 
 -- An author who reviewed a submission
@@ -240,7 +236,7 @@ CREATE TABLE IF NOT EXISTS Session (
     sess_start_time DATETIME NOT NULL,
     sess_end_time DATETIME NOT NULL,
     -- The chair of a paper session
-    sess_chair_id INT, // Will result in null values unfortunately, no NOT NULL
+    sess_chair_id INT, -- Will result in null values unfortunately, no NOT NULL
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sess_chair_id) REFERENCES Author(auth_id)
@@ -255,7 +251,7 @@ CREATE TABLE IF NOT EXISTS Presentation (
     pres_id INT NOT NULL,
     -- The start time of the presentation
     pres_start_time DATETIME NOT NULL,
-    PRIMARY KEY (sess_id, sub_id), // Can't have the 2 of the same submissions in the same session
+    PRIMARY KEY (sess_id, sub_id), -- Can't have the 2 of the same submissions in the same session
     FOREIGN KEY (sess_id) REFERENCES Session(sess_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (sub_id) REFERENCES Submission(sub_id)
@@ -264,24 +260,15 @@ CREATE TABLE IF NOT EXISTS Presentation (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- A user registration for a conference 
-CREATE TABLE IF NOT EXISTS Registration ( // Relation connecting Attendee <==> Conference
+-- A user registration for a conference -- Relation connecting Attendee <==> Conference
+CREATE TABLE IF NOT EXISTS Registration ( 
     att_id INT NOT NULL,
     conf_id INT NOT NULL,
-    // -- The registration fee
-    // reg_fee DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (att_id, conf_id),
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-    // CONSTRAINT chk_fee CHECK ( // Confirm that this works
-    //     reg_fee = (SELECT CASE WHEN a.is_student THEN c.student_fee ELSE c.regular_fee END
-    //                FROM Conference c
-    //                JOIN Registration r ON c.conf_id = r.conf_id
-    //                JOIN Attendee a ON r.att_id = a.att_id
-    //                WHERE r.att_id = att_id AND r.conf_id = conf_id)
-    // )
 );
 
 -- An attendee of a conference
@@ -292,7 +279,7 @@ CREATE TABLE IF NOT EXISTS Attendee (
     att_name TEXT NOT NULL,
     -- The attendee's contact information
     att_contact TEXT NOT NULL,
-    -- The attendee's organization // Assume all attendees have an org?
+    -- The attendee's organization -- Assume all attendees have an org?
     att_org TEXT NOT NULL,
     -- True if the attendee is a student
     is_student BOOLEAN NOT NULL
@@ -317,7 +304,6 @@ CREATE TABLE IF NOT EXISTS Workshop (
 CREATE TABLE IF NOT EXISTS WorkshopRegistration (
     att_id INT NOT NULL,
     work_id INT NOT NULL,
-    // reg_fee DECIMAL(10,2) NOT NULL,
     PRIMARY KEY (att_id, work_id),
     FOREIGN KEY (att_id) REFERENCES Attendee(att_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
@@ -325,8 +311,8 @@ CREATE TABLE IF NOT EXISTS WorkshopRegistration (
         ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- A facilitator for a workshop
-CREATE TABLE IF NOT EXISTS Facilitator ( // Relation connecting Author/Facilitator <==> Workshop
+-- A facilitator for a workshop -- Relation connecting Author/Facilitator <==> Workshop
+CREATE TABLE IF NOT EXISTS Facilitator ( 
     fac_id INT NOT NULL,
     work_id INT NOT NULL,
     PRIMARY KEY (fac_id, work_id),
@@ -343,16 +329,13 @@ CREATE TABLE IF NOT EXISTS Committee (
     -- The name of the committee
     comm_name TEXT NOT NULL,
     conf_id INT NOT NULL,
-    // member_id INT NOT NULL,
     UNIQUE(conf_id, member_id),
     FOREIGN KEY (conf_id) REFERENCES Conference(conf_id)
         ON DELETE CASCADE ON UPDATE CASCADE
-    // FOREIGN KEY (member_id) REFERENCES Author(auth_id)
-    //     ON DELETE CASCADE ON UPDATE CASCADE
 );
 
--- A member of an organizing committee
-CREATE TABLE IF NOT EXISTS CommitteeMember ( // Relation connecting Author/Committee member <==> Workshop
+-- A member of an organizing committee -- Relation connecting Author/Committee member <==> Workshop
+CREATE TABLE IF NOT EXISTS CommitteeMember ( 
     comm_id INT NOT NULL,
     member_id INT NOT NULL,
     PRIMARY KEY (comm_id, member_id),
