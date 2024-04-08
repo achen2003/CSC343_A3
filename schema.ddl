@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS Contributor (
     -- The order of author names on a given submission
     auth_order INT NOT NULL,
     CHECK (author_order > 0),
-    UNIQUE (sub_id, author_order)
+    UNIQUE (sub_id, author_order),
     PRIMARY KEY (auth_id, sub_id),
     FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
