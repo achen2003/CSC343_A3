@@ -1,0 +1,107 @@
+-------------------- Query 1: -----------------------------------
+
+SET
+ conference_name | submission_year | acceptance_percentage 
+-----------------+-----------------+-----------------------
+ CAECX           |            2024 |                  0.00
+ CompEd2019      |            2019 |                 33.33
+ CompEd2021      |            2021 |                 33.33
+ CompEd2023      |            2023 |                 33.33
+ CompEd2025      |            2025 |                  0.00
+ KidsLearn       |            2025 |                  0.00
+ SIGCSETS2010    |            2010 |                  0.00
+ SIGCSETS2011    |            2011 |                  0.00
+ SIGCSETS2012    |            2012 |                  0.00
+ SIGCSETS2013    |            2013 |                  0.00
+ SIGCSETS2014    |            2014 |                  0.00
+ SIGCSETS2015    |            2015 |                  0.00
+ SIGCSETS2016    |            2016 |                 20.00
+ SIGCSETS2017    |            2017 |                  0.00
+ SIGCSETS2018    |            2018 |                  0.00
+ SIGCSETS2019    |            2019 |                 50.00
+ SIGCSETS2020    |            2020 |                 50.00
+ SIGCSETS2021    |            2021 |                 50.00
+ SIGCSETS2022    |            2022 |                100.00
+ SIGCSETS2023    |            2023 |                100.00
+ SIGCSETS2024    |            2024 |                  0.00
+ SIGCSETS2025    |            2025 |                  0.00
+ STEMConference  |            2024 |                  0.00
+(23 rows)
+
+
+-------------------- Query 2: -----------------------------------
+
+SET
+ att_id |     att_name      | conference_count 
+--------+-------------------+------------------
+      1 | Michelle Craig    |                3
+      2 | Jennifer Campbell |                4
+      3 | Sadia Sharmin     |                7
+      4 | Khushi Patel      |                3
+      5 | Alex Chen         |                0
+      6 | Beep              |                0
+      7 | Bop               |                0
+      8 | Blip              |                0
+      9 | Jonathan Calver   |                1
+     10 | Larry Yueli Zhang |                1
+     11 | Diane Horton      |                1
+     12 | Daniel Zingaro    |                1
+     13 | Danny Heap        |                1
+(13 rows)
+
+
+-------------------- Query 3: -----------------------------------
+
+SET
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+ conference_name | first_author_id |    author_name    
+-----------------+-----------------+-------------------
+ SIGCSETS2023    |               2 | Jennifer Campbell
+ SIGCSETS2023    |               9 | Jonathan Calver
+(2 rows)
+
+
+-------------------- Query 4: -----------------------------------
+
+SET
+CREATE VIEW
+CREATE VIEW
+CREATE VIEW
+ submission_title | submission_id | first_author_name | submission_count 
+------------------+---------------+-------------------+------------------
+ Superfun         |            22 | Jennifer Campbell |                1
+(1 row)
+
+-------------------- Query 5: -----------------------------------
+
+SET
+CREATE VIEW
+CREATE VIEW
+ conf_id | conference_name | avg_papers_per_paper_session | avg_posters_per_poster_session 
+---------+-----------------+------------------------------+--------------------------------
+       1 | SIGCSETS2025    |                            0 |                              0
+       2 | CompEd2025      |                            0 |                              0
+       3 | STEMConference  |                            0 |                              0
+       4 | KidsLearn       |                            0 |                              0
+       5 | CAECX           |                            0 |                              0
+       6 | CompEd2019      |                            0 |         1.00000000000000000000
+       8 | CompEd2021      |                            0 |                              0
+      10 | CompEd2023      |                            0 |                              0
+      12 | SIGCSETS2023    |       1.00000000000000000000 |                              0
+      13 | SIGCSETS2024    |                            0 |                              0
+      14 | SIGCSETS2022    |       1.00000000000000000000 |                              0
+      15 | SIGCSETS2021    |       1.00000000000000000000 |         1.00000000000000000000
+      16 | SIGCSETS2020    |       1.00000000000000000000 |         1.00000000000000000000
+      17 | SIGCSETS2019    |       1.00000000000000000000 |         1.00000000000000000000
+      18 | SIGCSETS2018    |                            0 |                              0
+      19 | SIGCSETS2017    |                            0 |                              0
+      20 | SIGCSETS2016    |       1.00000000000000000000 |                              0
+      21 | SIGCSETS2015    |                            0 |                              0
+      22 | SIGCSETS2014    |                            0 |                              0
+      23 | SIGCSETS2013    |                            0 |                              0
+      24 | SIGCSETS2012    |                            0 |                              0
+      25 | SIGCSETS2011    |                            0 |                              0
+      26 | SIGCSETS2010    |                            0 |                              0
+(23 rows)
