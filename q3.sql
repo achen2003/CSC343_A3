@@ -53,7 +53,7 @@ CREATE VIEW ConferenceWithMostAcceptedPapers AS
     LIMIT 1;
 
 -- Query for reporting the first authors of papers from conferences with the most number of accepted papers
-SELECT cwmap.conference_name, ap.first_author_id, a.auth_name AS first_author_name
+SELECT DISTINCT(cwmap.conference_name, ap.first_author_id, a.auth_name) AS first_author_name
 FROM ConferenceWithMostAcceptedPapers cwmap
 JOIN AcceptedPapers ap ON cwmap.conference_name = ap.conference_name
 JOIN Author a ON ap.first_author_id = a.auth_id;

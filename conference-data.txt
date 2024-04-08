@@ -9,7 +9,16 @@ You are welcome to use that list   for inspiration for the rest of your data,
 but you do not have to. 
 
 //Khushi's notes
+- figure out chair id as well
+- add rejections for those not presenting
 - all accepted submisisons should be presented as well
+- 33 submissions
+- 33 accempted
+-- ill make myself the dummy author that reviews everyone's work
+different sessions need:
+- for presentation we need to find all the accepted submissions
+- we need conf_id, sub_id, s_type 
+
 - add facilitator
 - add author order for submissions
 - add accept/reject for every single submission
@@ -33,6 +42,12 @@ but reviewing has not yet begun.
 The ACM Global Computing Education Conference (CompEd) has been held every 2
 years since 2019. The annual acceptance rate is 33%. It has been scheduled
 for 2025, but is not yet accepting submissions. 
+-- for 2019,2021,2023
+- add 3 sumbissions Each
+- one accepted submission
+- 2 rejected
+can be from same person
+- 10 new submissions to confernece 2 which are rejected
 
 There are at least three other conferences that have occurred. 
 
