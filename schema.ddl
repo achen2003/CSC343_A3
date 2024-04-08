@@ -148,8 +148,6 @@ CREATE TABLE IF NOT EXISTS Attendee (
 CREATE TABLE IF NOT EXISTS Author (
     -- Unique author identifier
     auth_id INT PRIMARY KEY,
-    -- The organization of which the author is a member of
-    organization TEXT NOT NULL,
     att_id INT NOT NULL,
     -- The name of the author
     auth_name TEXT NOT NULL,
