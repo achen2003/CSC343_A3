@@ -1,14 +1,4 @@
 rev_id,reviewer_id,sub_id,decision
-1,2,1,accept
-2,2,2,accept
-3,2,3,accept
-4,2,4,accept
-5,2,5,accept
-6,2,6,accept
-7,2,7,accept
-8,2,8,accept
-9,2,9,accept
-10,2,10,accept
 31,1,11,accept
 32,1,12,accept
 33,1,13,accept
