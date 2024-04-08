@@ -115,7 +115,7 @@ CREATE TYPE A3Conference.submission_type AS ENUM (
 );
 
 CREATE TYPE A3Conference.review_decision AS ENUM (
-    'accepted', 'rejected'
+    'accept', 'reject'
 );
 
 -- This ENUM was included in case any new session types were to be introduced
@@ -194,7 +194,7 @@ CREATE TABLE IF NOT EXISTS Contributor (
     -- The order of author names on a given submission
     auth_order INT NOT NULL,
     CHECK (auth_order > 0),
-    UNIQUE (sub_id, author_order),
+    UNIQUE (sub_id, auth_order),
     PRIMARY KEY (auth_id, sub_id),
     FOREIGN KEY (auth_id) REFERENCES Author(auth_id)
         ON DELETE CASCADE ON UPDATE CASCADE,
