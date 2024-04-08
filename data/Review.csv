@@ -1,0 +1,36 @@
+rev_id, reviewer_id, sub_id, decision
+1, 2, 1, 1, accept
+2, 2, 2, 1, accept
+3, 2, 3, 1, accept
+4, 2, 4, 1, accept
+5, 2, 5, 1, accept
+6, 2, 6, 1, accept
+7, 2, 7, 1, accept
+8, 2, 8, 1, accept
+9, 2, 9, 1, accept
+10, 2, 10, 1, accept
+11, 3, 1, 1, accept
+12, 3, 2, 1, accept
+13, 3, 3, 1, accept
+14, 3, 4, 1, accept
+15, 3, 5, 1, accept
+16, 3, 6, 1, accept
+17, 3, 7, 1, accept
+18, 3, 8, 1, accept
+19, 3, 9, 1, accept
+20, 3, 10, 1, accept
+21, 4, 1, 1, accept
+22, 4, 2, 1, accept
+23, 4, 3, 1, accept
+24, 4, 4, 1, accept
+25, 4, 5, 1, accept
+26, 4, 6, 1, accept
+27, 4, 7, 1, accept
+28, 4, 8, 1, accept
+29, 4, 9, 1, accept
+30, 4, 10, 1, accept
+31, 1, 11, accept
+32, 1, 12, accept
+33, 1, 13, accept
+34, 1, 14, accept
+35, 1, 15, accept

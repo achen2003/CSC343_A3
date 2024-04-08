@@ -17,11 +17,27 @@ between 30% and 40%. SIGCSE TS 2023 was held in Toronto, and is the largest
 conference in the database. It is currently accepting submissions for 2025, 
 but reviewing has not yet begun.
 
+//Khushi's notes:
+- SIGCSE
+  - going to make it start Jan 4 2023 and end Jan 7 2023
+  - regular fee will be $100, and student fee will be $60
+
+//
+
 The ACM Global Computing Education Conference (CompEd) has been held every 2
 years since 2019. The annual acceptance rate is 33%. It has been scheduled
 for 2025, but is not yet accepting submissions. 
 
 There are at least three other conferences that have occurred. 
+
+//Khushi's notes:
+- CompEd
+  - it will start jan 9 2025 end jan 11 2025
+  - no submisisons yet
+  - 33% of submissions should accepted 
+
+- add three other random conferences
+//
 
 === People ===
 
@@ -30,16 +46,42 @@ Between both of these conferences, she has had at least 10 papers accepted.
 She has not submitted any posters. She was the conference chair for CompEd 2019 
 and SIGCSE TS 2023. 
 
+//Khushi's notes:
+- Michelle Craig
+  - add as attendee with email michelle.craig@gmail.com, not student
+  - for submisisons, add 10 submisisons that were accepted in reviews
+  - conference chair
+  - add to conference chairs
+//
+
 Jennifer Campbell has attended most, but not all, of SIGCSE TS since 2015. She
 did not attend once when she had a paper accepted. She has had at least 5 papers
 accepted at SIGCSE TS, including at least one time when she had two papers 
 accepted to the same conference. She has attended workshops at two different 
 conferences.
 
+//Khushi's notes:
+- Jennifer Campbell
+  - she won't attend conference 15 where submission 13 is accepted
+  - add as attendee with email jennifer.c@gmail.com, not student
+  - for submisisons, add 5 submisisons that were accepted in reviews to SIGCSE
+  - conference chair
+  - add another conference that she attended
+  - 2 papers should be accepted at same conference, they are accepted at conference 12
+//
+
 Sadia Sharmin has attended SIGCSE TS 3 times since 2018 and she attended CompEd
 in 2019. Each time she attended a conference, she presented a paper or a poster. 
 She was the sole author on all of her posters. 
 
+//Khushi's notes:
+- Sadia Sharmin
+- add 2 papers and 1 poster for submissions, update reviews
+- add to presentation
+-  difference sessions for 
+- add session chairs for conference 15, 16, 17, 6
+
+//
 
 === Papers ===
 

@@ -29,4 +29,7 @@ COPY Committee FROM 'data/Committee.csv' WITH CSV DELIMITER ',' HEADER;
 
 COPY ConferenceChairs FROM 'data/ConferenceChairs.csv' WITH CSV DELIMITER ',' HEADER;
 
+COPY WorkshopRegistration FROM 'data/WorkshopRegistration.csv' WITH CSV DELIMITER ',' HEADER;
+
+COPY CommitteeMember FROM 'data/CommitteeMember.csv' WITH CSV DELIMITER ',' HEADER;
 

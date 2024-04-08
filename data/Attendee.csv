@@ -1,0 +1,5 @@
+att_id, att_name, att_contact, att_org, is_student
+1, Michelle Craig, michelle.craig@gmail.com, org1, false
+2, Jennifer Campbell, Jennifer.Campbell@gmail.com, org2, false
+3, Sadia Sharmin, Sadia.Sharmin@gmail.com, org3, false
+4, Khushi Patel, khushi.patel@gmail.com, org4, false
