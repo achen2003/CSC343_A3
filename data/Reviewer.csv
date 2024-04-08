@@ -1,5 +1,5 @@
-reviewer_id, confl_type, att_id, auth_id
-1, none, 1, 1
-2, none, 2, 2
-3, none, 3, 3
-4, none, 4, 4
+reviewer_id,confl_type,att_id,auth_id
+1,none,1,1
+2,none,2,2
+3,none,3,3
+4,none,4,4

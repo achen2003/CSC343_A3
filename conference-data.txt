@@ -8,6 +8,11 @@ This data was very loosely inspired by https://uoftcsed.github.io/pubs/
 You are welcome to use that list for inspiration for the rest of your data,
 but you do not have to. 
 
+//Khushi's notes
+- all accepted submisisons should be presented as well
+- add facilitator
+- add author order for submissions
+//
 
 === Conferences ===
 

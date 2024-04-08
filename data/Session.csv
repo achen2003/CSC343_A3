@@ -1,5 +1,5 @@
-sess_id, conf_id, sess_type, sess_start_time, sess_end_time, sess_chair_id
-1, 15, poster session, 2021-01-04 09:00:00, 2021-01-04 19:00:00, 
-2, 16, poster session, 2020-01-04 09:00:00, 2020-01-04 19:00:00,
-3, 17, poster session, 2019-01-04 09:00:00, 2019-01-04 19:00:00, 
-4, 6, poster session, 2019-01-09 09:00:00, 2019-01-09 09:00:00, 1
+sess_id,conf_id,sess_type,sess_start_time,sess_end_time,sess_chair_id
+1,15,poster session,2021-01-04 09:00:00,2021-01-04 19:00:00,
+2,16,poster session,2020-01-04 09:00:00,2020-01-04 19:00:00,
+3,17,poster session,2019-01-04 09:00:00,2019-01-04 19:00:00,
+4,6,poster session,2019-01-09 09:00:00,2019-01-09 09:00:00,1
