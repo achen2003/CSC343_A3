@@ -54,14 +54,18 @@
 
 
 -- Extra constraints: What additional constraints that we didnt mention did you enforce, if any?
-
-
--- Assumptions: What assumptions did you make?
     -- Conferences with the same name can't start on the same date
 
-    -- Assume 2 sessions can occur at the same time in one conference
-
     -- Workshops with the same names can't be in the same conference
+
+    -- An attendee cannot attend the same conference twice
+
+    -- A submission can't be submitted multiple times to the same conference
+
+-- Note - extra constraints and assumptions are sort of interchangeable, as all assumptions we made
+-- were enforced through UNIQUE statements, FKs, or otherwise.
+-- Assumptions: What assumptions did you make?
+    -- Assume 2 sessions can occur at the same time in one conference
 
     -- A facilitator must be an author
 
@@ -76,11 +80,7 @@
     -- To reduce redundancy, authors and reviewers who are not attending will not have their names 
     -- considered, as they are assumed to not be involved
 
-    -- An attendee cannot attend the same conference twice
-
     -- All attendees have an organization
-
-    -- A submission can't be submitted multiple times to the same conference
 
 
 -- Formatting according to these rules:
