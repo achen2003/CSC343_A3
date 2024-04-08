@@ -80,6 +80,8 @@
 
     -- All attendees have an organization
 
+    -- A submission can't be submitted multiple times to the same conference
+
 
 -- Formatting according to these rules:
     -- An 80-character line limit is used.
